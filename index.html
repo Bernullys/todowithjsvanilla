@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDO Vanilla</title>
+</head>
+<body>
+    <header>
+        <h1>ToDo Vanilla</h1>
+        <h2>ToDo App</h2>
+    </header>
+    <form class="todo-form" action="">
+        <label for="todo-input">Enter Todo</label>
+        <input type="text" id="todo-input" placeholder="write your ToDo">
+        <button class="todoButton">Add</button>
+    </form>
+    <section class="todo-container">
+        <h3>
+            These are your Todo's
+        </h3>
+        <ul class="todo-list">
+            <!-- <button>Check</button>
+            <li>sdhbfbsdjbnsfnoin</li>
+            <button>Delete</button> -->
+        </ul>
+
+    </section>
+    
+    <script>
+        const todosContainer = document.querySelector(".todo-container")
+        const todoForm = document.querySelector(".todo-form")
+        const todoInput = document.getElementById("todo-input")
+        const todoList = document.querySelector(".todo-list")
+        const todoButton = document.querySelector(".todoButton")
+
+        todoForm.onsubmit = (event) => {
+            event.preventDefault()
+            const todo = document.createElement("li")
+            todosContainer.appendChild(todo)
+            todo.textContent = todoInput.value
+        }
+    </script>
+</body>
+
+
+</html>
