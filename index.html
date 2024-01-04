@@ -5,6 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDO Vanilla</title>
+    <style>
+        .todo-container {
+            display: flex;
+        }
+        .checked {
+            text-decoration: line-through;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -16,14 +24,11 @@
         <input type="text" id="todo-input" placeholder="write your ToDo">
         <button class="todoButton">Add</button>
     </form>
+    <h3>
+        These are your Todo's
+    </h3>
     <section class="todo-container">
-        <h3>
-            These are your Todo's
-        </h3>
         <ul class="todo-list">
-            <!-- <button>Check</button>
-            <li>sdhbfbsdjbnsfnoin</li>
-            <button>Delete</button> -->
         </ul>
 
     </section>
@@ -35,11 +40,43 @@
         const todoList = document.querySelector(".todo-list")
         const todoButton = document.querySelector(".todoButton")
 
+        const deleteTodo = (el) => {
+            el.remove()
+        }
+
+        const checked = (item) => {
+            item.classList.add("checked")
+        }
+
+
         todoForm.onsubmit = (event) => {
             event.preventDefault()
-            const todo = document.createElement("li")
-            todosContainer.appendChild(todo)
-            todo.textContent = todoInput.value
+            if (todoInput.value != "") {
+                const todo = document.createElement("li")
+                const checkButton = document.createElement("button")
+                const deleteButton = document.createElement("button")
+                const todoContainer = document.createElement("ul")
+
+                todo.style.listStyle = "none"
+                todo.style.width = "80%"
+                todo.style.textAlign = "center"
+                todo.style.alignSelf = "center"
+                todoContainer.style.display = "flex"
+                todoContainer.style.justifyContent = "space-around"
+                todoContainer.style.width = "100%"
+                todoContainer.style.height = "30px"
+
+                todoList.appendChild(todoContainer)
+                todoContainer.appendChild(checkButton)
+                todoContainer.appendChild(todo)
+                todoContainer.appendChild(deleteButton)
+                checkButton.textContent = "Check"
+                todo.textContent = todoInput.value
+                deleteButton.textContent = "Delete"
+                deleteButton.onclick = deleteTodo.bind(null, todoContainer)
+                checkButton.onclick = () => checked(todo)
+                todoInput.value = ""
+            }
         }
     </script>
 </body>
