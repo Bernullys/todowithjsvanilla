@@ -9,7 +9,7 @@
         body {
             display: flex;
             justify-content: center;
-            background: green;
+            background: rgb(193, 239, 193);
         }
 
         .todo-app-container {
@@ -38,13 +38,13 @@
         .todo-label {
             width: 120px;
             font-size: 20px;
+            margin: 0 12px 0 0;
         }
 
         #todo-input {
             height: 44px;
             width: 600px;
-            margin: 0;
-            padding: 0;
+            padding: 0 0 0 10px;
             border: 0;
             border-radius: 8px 0 0 8px;
             font-size: 16px;
@@ -55,10 +55,18 @@
             width: 60px;
             padding: 0px;
             border: 0;
-            background: white;
+            background: rgb(236, 236, 236);
             border-radius: 0 8px 8px 0;
             cursor: pointer;
             font-size: 16px;
+        }
+
+        .todos_todo_title {
+           display: none; 
+        }
+
+        .active {
+            display: block;
         }
 
         .checked {
@@ -147,14 +155,19 @@
     <section class="todo-app-container">
         <header>
             <h1>ToDo App</h1>
+            <article>
+                <h3>You have</h3>
+                <h3 class="counting_todos">0</h3>
+                <h3>ToDo's</h3>
+            </article>
         </header>
         <form class="todo-form" action="">
             <label for="todo-input" class="todo-label">Enter Todo</label>
             <input type="text" id="todo-input" placeholder="write your ToDo">
             <button class="todoButton">Add</button>
         </form>
-        <h3>
-            These are your Todo's:
+        <h3 class="todos_todo_title">
+            These are your ToDo's
         </h3>
         <section class="todo-container">
             <section class="todo-list"></section>
@@ -167,30 +180,47 @@
         const todoInput = document.getElementById("todo-input")
         const todoList = document.querySelector(".todo-list")
         const todoButton = document.querySelector(".todoButton")
-
+        
+        const countingTodos = document.querySelector(".counting_todos")
+        
+        let todosTodo = 0
+        console.log(todosTodo)
+        const todosTodoTitle = document.querySelector(".todos_todo_title")
+        
         const deleteTodo = (el) => {
             el.remove()
+            todosTodo -= 1
+            if  (todosTodo === 0) {
+                todosTodoTitle.classList.remove("active")
+            }
+            console.log(todosTodo)
+            countingTodos.textContent = todosTodo.toString()
         }
-
+        
         const checked = (item, butt) => {
             item.classList.toggle("checked")
             butt.textContent = item.classList.contains("checked") ? "Uncheck" : "Check"
         }
-
-
+        
         todoForm.onsubmit = (event) => {
             event.preventDefault()
             if (todoInput.value != "") {
+
+                todosTodo += 1
+                if (todosTodo >= 1) {
+                    todosTodoTitle.classList.add("active")
+                }
+                
                 const todo = document.createElement("li")
                 const checkButton = document.createElement("button")
                 const deleteButton = document.createElement("button")
                 const todoContainer = document.createElement("ul")
-
+                
                 todo.classList = "todo-style"
                 todoContainer.classList = "todo-ul-container"
                 checkButton.classList = "button-check-delete"
                 deleteButton.classList = "button-check-delete"
-
+                
                 todoList.appendChild(todoContainer)
                 todoContainer.appendChild(checkButton)
                 todoContainer.appendChild(todo)
@@ -201,9 +231,12 @@
                 deleteButton.onclick = deleteTodo.bind(null, todoContainer)
                 checkButton.onclick = () => checked(todo, checkButton)
                 todoInput.value = ""
+                
+                console.log(todosTodo)
+                countingTodos.textContent = todosTodo.toString()
             }
         }
-    </script>
+        </script>
 
 </body>
 
