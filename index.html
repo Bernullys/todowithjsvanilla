@@ -6,31 +6,159 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDO Vanilla</title>
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            background: green;
+        }
+
+        .todo-app-container {
+            width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 16px;
+            background: url("https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&w=600");
+            background-size: cover;
+            background-position: top;
+            background-repeat: no-repeat;
+        }
+
         .todo-container {
             display: flex;
         }
+
+        .todo-form {
+            display: flex;
+            align-items: center;
+            width: 600px;
+            height: 64px;
+        }
+
+        .todo-label {
+            width: 120px;
+            font-size: 20px;
+        }
+
+        #todo-input {
+            height: 44px;
+            width: 600px;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            border-radius: 8px 0 0 8px;
+            font-size: 16px;
+        }
+
+        .todoButton {
+            height: 44px;
+            width: 60px;
+            padding: 0px;
+            border: 0;
+            background: white;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
         .checked {
             text-decoration: line-through;
         }
+
+        .todo-ul-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+            width: 600px;
+            padding: 0;
+        }
+
+        .button-check-delete {
+            cursor: pointer;
+            height: 44px;
+            width: 64px;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .todo-style {
+            list-style: none;
+            text-align: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        @media (max-width: 630px) {
+            .todo-form {
+                flex-direction: column;
+                justify-content: space-around;
+                height: 150px;
+                width: 400px;
+            }
+            .todo-label {
+                margin-bottom: 8px;
+            }
+            #todo-input {
+                width: 75%;
+                height: 50px;
+                border-radius: 8px;
+            }
+            .todoButton {
+                border-radius: 8px;
+            }
+            .todo-ul-container {
+                width: 400px;
+            }
+            .todo-style {
+                font-size: 14px;
+                font-weight: 400;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .todo-form {
+                height: 150px;
+                width: 250px;
+            }
+            .todo-ul-container {
+                width: 250px;
+            }
+            #todo-input {
+                width: 75%;
+                height: 30px;
+                border-radius: 8px;
+            }
+            .todoButton {
+                height: 30px;
+            }
+            .button-check-delete {
+            height: 36px;
+            width: 44px;
+            border-radius: 6px;
+            font-size: 10px;
+        }
+        }
+
     </style>
 </head>
 <body>
-    <header>
-        <h1>ToDo Vanilla</h1>
-        <h2>ToDo App</h2>
-    </header>
-    <form class="todo-form" action="">
-        <label for="todo-input">Enter Todo</label>
-        <input type="text" id="todo-input" placeholder="write your ToDo">
-        <button class="todoButton">Add</button>
-    </form>
-    <h3>
-        These are your Todo's
-    </h3>
-    <section class="todo-container">
-        <ul class="todo-list">
-        </ul>
-
+    <section class="todo-app-container">
+        <header>
+            <h1>ToDo App</h1>
+        </header>
+        <form class="todo-form" action="">
+            <label for="todo-input" class="todo-label">Enter Todo</label>
+            <input type="text" id="todo-input" placeholder="write your ToDo">
+            <button class="todoButton">Add</button>
+        </form>
+        <h3>
+            These are your Todo's:
+        </h3>
+        <section class="todo-container">
+            <section class="todo-list"></section>
+        </section>
     </section>
     
     <script>
@@ -44,8 +172,9 @@
             el.remove()
         }
 
-        const checked = (item) => {
-            item.classList.add("checked")
+        const checked = (item, butt) => {
+            item.classList.toggle("checked")
+            butt.textContent = item.classList.contains("checked") ? "Uncheck" : "Check"
         }
 
 
@@ -57,14 +186,10 @@
                 const deleteButton = document.createElement("button")
                 const todoContainer = document.createElement("ul")
 
-                todo.style.listStyle = "none"
-                todo.style.width = "80%"
-                todo.style.textAlign = "center"
-                todo.style.alignSelf = "center"
-                todoContainer.style.display = "flex"
-                todoContainer.style.justifyContent = "space-around"
-                todoContainer.style.width = "100%"
-                todoContainer.style.height = "30px"
+                todo.classList = "todo-style"
+                todoContainer.classList = "todo-ul-container"
+                checkButton.classList = "button-check-delete"
+                deleteButton.classList = "button-check-delete"
 
                 todoList.appendChild(todoContainer)
                 todoContainer.appendChild(checkButton)
@@ -74,12 +199,12 @@
                 todo.textContent = todoInput.value
                 deleteButton.textContent = "Delete"
                 deleteButton.onclick = deleteTodo.bind(null, todoContainer)
-                checkButton.onclick = () => checked(todo)
+                checkButton.onclick = () => checked(todo, checkButton)
                 todoInput.value = ""
             }
         }
     </script>
-</body>
 
+</body>
 
 </html>
