@@ -34,3 +34,24 @@ The if statement check if the value of the input isn't empty so it can't add emp
 Then I add a functionallity of the subtitle to be visible only when there were todos added.
 
 Then I add a counter of todos, having a variable initialazed on zero and add one everytime the form is submited and substracting one when deleting a todo.
+
+
+Changes made: Adding localStorage functionallity.
+localStorage intro:
+
+The localStorage API is a part of the Web Storage API in JavaScript that allows you to store key-value pairs in a web browser with no expiration time. This means the data stored in localStorage persists even after the browser is closed and reopened.
+
+🔧 How It Works:
+localStorage is accessed through the global window object.
+Data is stored as strings (you’ll need to serialize objects using JSON.stringify()).
+Each domain (origin) has its own separate localStorage.
+
+🧰 Basic Methods:
+Here are the key methods of localStorage:
+| Method                | Description                                    |
+| --------------------- | ---------------------------------------------- |
+| `setItem(key, value)` | Stores a key-value pair. Both must be strings. |
+| `getItem(key)`        | Retrieves the value associated with a key.     |
+| `removeItem(key)`     | Removes the key and its associated value.      |
+| `clear()`             | Removes all key-value pairs.                   |
+| `key(index)`          | Returns the key at a specific index.           |
