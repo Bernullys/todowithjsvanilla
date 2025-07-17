@@ -187,11 +187,17 @@
         function loadTodosFromLocalStorage () {
             let todos = JSON.parse(localStorage.getItem("todos")) || [];
             todos.forEach(task => createTodoItem(task))
+
+            todosTodo = todos.length;
+            countingTodos.textContent = todosTodo.toString();
+            if (todosTodo > 0) {
+                todosTodoTitle.classList.add("active");
+            }
         }
 
-        function removeTodoFromLocalStorage (task) {
+        function removeTodoFromLocalStorage (taskText) {
             let todos = JSON.parse(localStorage.getItem("todos")) || [];
-            todos = todos.filter(t => t !== task);
+            todos = todos.filter(t => t !== taskText);
             localStorage.setItem("todos", JSON.stringify(todos));
         }
 
@@ -249,8 +255,8 @@
             deleteButton.textContent = "Delete"
 
             deleteButton.onclick = () => {
-                deleteTodo.bind(todoContainer);
-                removeTodoFromLocalStorage(taskText);
+                deleteTodo(todoContainer);
+                removeTodoFromLocalStorage(todo.textContent.trim());
             }
 
                 checkButton.onclick = () => checked(todo, checkButton)
