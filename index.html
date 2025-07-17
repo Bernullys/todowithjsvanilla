@@ -189,7 +189,7 @@
             todos.forEach(task => createTodoItem(task))
         }
 
-        function removeTodoFromLocalStorage () {
+        function removeTodoFromLocalStorage (task) {
             let todos = JSON.parse(localStorage.getItem("todos")) || [];
             todos = todos.filter(t => t !== task);
             localStorage.setItem("todos", JSON.stringify(todos));
@@ -249,8 +249,8 @@
             deleteButton.textContent = "Delete"
 
             deleteButton.onclick = () => {
-                deleteTodo.bind(todoContainer)
-                removeTodoFromLocalStorage(taskText)
+                deleteTodo.bind(todoContainer);
+                removeTodoFromLocalStorage(taskText);
             }
 
                 checkButton.onclick = () => checked(todo, checkButton)
