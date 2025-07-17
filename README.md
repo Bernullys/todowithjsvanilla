@@ -13,7 +13,7 @@ So now we have the advantage of a form.
 
 Then I add two buttons when creating a todo. One to delete and another to check if the todo is done.
 
-The delete button has its detail: we create a function that applaid the function remove() to its argument. But here is the detail: when we applay onclick to the delete button equals to the delete function we have to applai the bind function. Bind function does: (chatGpt response)
+The delete button has its detail: we create a function that applaid the function remove() to its argument. But here is the detail: when we applay onclick to the delete button equals to the delete function we have to apply the bind function. Bind function does: (chatGpt response)
 
         The bind method is used to create a new function (deleteTodo with a partially applied argument) and set its this value to null. The this value is not used inside deleteTodo, so null is passed.
 

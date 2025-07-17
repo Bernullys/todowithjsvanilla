@@ -175,6 +175,25 @@
     </section>
     
     <script>
+
+        function saveTodoToLocalStorage (task) {
+            let todos = JSON.parse(localStorage.getItem("todos")) || [];
+            todos.push(task);
+            localStorage.setItem("todos", JSON.stringify(todos));
+        }
+
+        function loadTodosFromLocalStorage () {
+            let todos = JSON.parse(localStorage.getItem("todos")) || [];
+            todos.forEach(task => createTodoItem(task))
+        }
+
+        function removeTodoFromLocalStorage () {
+            let todos = JSON.parse(localStorage.getItem("todos")) || [];
+            todos = todos.filter(t => t !== task);
+            localStorage.setItem("todos", JSON.stringify(todos));
+        }
+
+
         const todosContainer = document.querySelector(".todo-container")
         const todoForm = document.querySelector(".todo-form")
         const todoInput = document.getElementById("todo-input")
@@ -201,41 +220,52 @@
             item.classList.toggle("checked")
             butt.textContent = item.classList.contains("checked") ? "Uncheck" : "Check"
         }
-        
-        todoForm.onsubmit = (event) => {
-            event.preventDefault()
-            if (todoInput.value != "") {
 
-                todosTodo += 1
-                if (todosTodo >= 1) {
-                    todosTodoTitle.classList.add("active")
-                }
-                
-                const todo = document.createElement("li")
-                const checkButton = document.createElement("button")
-                const deleteButton = document.createElement("button")
-                const todoContainer = document.createElement("ul")
-                
-                todo.classList = "todo-style"
-                todoContainer.classList = "todo-ul-container"
-                checkButton.classList = "button-check-delete"
-                deleteButton.classList = "button-check-delete"
-                
-                todoList.appendChild(todoContainer)
-                todoContainer.appendChild(checkButton)
-                todoContainer.appendChild(todo)
-                todoContainer.appendChild(deleteButton)
-                checkButton.textContent = "Check"
-                todo.textContent = todoInput.value
-                deleteButton.textContent = "Delete"
-                deleteButton.onclick = deleteTodo.bind(null, todoContainer)
-                checkButton.onclick = () => checked(todo, checkButton)
-                todoInput.value = ""
-                
-                console.log(todosTodo)
-                countingTodos.textContent = todosTodo.toString()
+        
+        function createTodoItem(taskText) {
+            todosTodo += 1;
+            if (todosTodo >= 1) {
+                todosTodoTitle.classList.add("active");
             }
+
+            const todo = document.createElement("li")
+            const checkButton = document.createElement("button")
+            const deleteButton = document.createElement("button")
+            const todoContainer = document.createElement("ul")
+
+            todo.classList = "todo-style"
+            todoContainer.classList = "todo-ul-container"
+            checkButton.classList = "button-check-delete"
+            deleteButton.classList = "button-check-delete"
+            
+            todoList.appendChild(todoContainer)
+            todoContainer.appendChild(checkButton)
+            todoContainer.appendChild(todo)
+            todoContainer.appendChild(deleteButton)
+            checkButton.textContent = "Check"
+            todo.textContent = taskText
+            deleteButton.textContent = "Delete"
+
+            deleteButton.onclick = () => {
+                deleteTodo.bind(todoContainer)
+                removeTodoFromLocalStorage(taskText)
+            }
+
+                checkButton.onclick = () => checked(todo, checkButton)
+                
+                countingTodos.textContent = todosTodo.toString()
         }
+
+        todoForm.onsubmit = (event) => {
+            event.preventDefault();
+            const task = todoInput.value.trim();
+            if (task !== "") {
+                createTodoItem(task);
+                saveTodoToLocalStorage(task);
+                todoInput.value = "";
+            }
+        };
+   
         </script>
 
 </body>
