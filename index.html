@@ -176,6 +176,8 @@
     
     <script>
 
+        document.addEventListener("DOMContentLoaded", loadTodosFromLocalStorage);
+
         function saveTodoToLocalStorage (task) {
             let todos = JSON.parse(localStorage.getItem("todos")) || [];
             todos.push(task);
